@@ -7,3 +7,8 @@ node_modules/
 /test-result/screenshots/**.png
 /playwright-cucumber-ts.iml
 /**report.html
+index.html
+features
+assets
+screenshots
+@rerun.txt
