@@ -1,0 +1,9 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.idea
+/test-result/screenshots/**.png
+/playwright-cucumber-ts.iml
+/**report.html
