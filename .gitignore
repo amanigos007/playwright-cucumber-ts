@@ -8,7 +8,7 @@ node_modules/
 /playwright-cucumber-ts.iml
 /**report.html
 index.html
-features
 assets
 screenshots
 @rerun.txt
+./features/
