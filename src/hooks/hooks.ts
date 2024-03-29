@@ -21,7 +21,7 @@ After(async function ({pickle, result}) {
     //Screenshot for failure scenario
     console.log(result?.status)
     if (result?.status == Status.FAILED) {
-        const img = await pageFixture.page.screenshot({path: `./test-result/screenshots/${pickle.name}.png`, type: "png"})
+        const img = await pageFixture.page.screenshot({path: `./screenshots/${pickle.name}.png`, type: "png"})
         this.attach(img, "image/png");
     }
     await pageFixture.page.close();
