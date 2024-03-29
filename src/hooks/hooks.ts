@@ -5,6 +5,7 @@ import {invokeBrowser} from "../helper/browsers/browser.manager";
 import {getEnv} from "../helper/env/env";
 import {createLogger} from "winston";
 import {options} from "../helper/util/logger";
+import * as fs from 'fs';
 
 
 let page: Page;
@@ -18,7 +19,11 @@ BeforeAll(async function () {
 
 Before(async function ({pickle}) {
     const scenarioName  = pickle.name + pickle.id;
-    context = await browser.newContext();
+    context = await browser.newContext({
+        recordVideo: {
+            dir: "test-results/videos"
+        }
+    });
     page = await context.newPage();
     fixture.page = page;
     fixture.logger = createLogger(options(scenarioName))
@@ -26,16 +31,23 @@ Before(async function ({pickle}) {
 
 After(async function ({pickle, result}) {
     //Screenshot for failure scenario
+    let videoPath: string;
+    let img: Buffer;
     console.log(result?.status)
     if (result?.status == Status.FAILED) {
-        const img = await fixture.page.screenshot({path: `./screenshots/${pickle.name}.png`, type: "png"})
-        this.attach(img, "image/png");
+        videoPath = await fixture.page.video().path();
+        img = await fixture.page.screenshot({path: `./test-results/screenshots/${pickle.name}.png`, type: "png"})
     }
     await fixture.page.close();
     await context.close();
+
+    if (result?.status == Status.FAILED) {
+        this.attach(img, "image/png");
+        this.attach(fs.readFileSync(videoPath), 'video/webm');
+    }
 });
 
 AfterAll(async function () {
     await browser.close();
-    fixture.logger.close();
+    //fixture.logger.close();
 });

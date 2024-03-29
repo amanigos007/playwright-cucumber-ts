@@ -2,7 +2,7 @@ const report = require("multiple-cucumber-html-reporter");
 
 report.generate({
     jsonDir: "test-results",
-    reportPath: "./",
+    reportPath: "test-results/reports/",
     reportName: "Test Automation Report",
     pageTitle: "Sauce Labs Demo",
     displayDuration: false,
