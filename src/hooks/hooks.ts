@@ -1,6 +1,6 @@
 import {After, AfterAll, Before, BeforeAll, Status} from "@cucumber/cucumber";
 import {Browser, BrowserContext, chromium, Page} from "@playwright/test";
-import {pageFixture} from "./page.fixture";
+import {fixture} from "./page.fixture";
 import {invokeBrowser} from "../helper/browsers/browser.manager";
 import {getEnv} from "../helper/env/env";
 import {createLogger} from "winston";
@@ -20,22 +20,22 @@ Before(async function ({pickle}) {
     const scenarioName  = pickle.name + pickle.id;
     context = await browser.newContext();
     page = await context.newPage();
-    pageFixture.page = page;
-    pageFixture.logger = createLogger(options(scenarioName))
+    fixture.page = page;
+    fixture.logger = createLogger(options(scenarioName))
 });
 
 After(async function ({pickle, result}) {
     //Screenshot for failure scenario
     console.log(result?.status)
     if (result?.status == Status.FAILED) {
-        const img = await pageFixture.page.screenshot({path: `./screenshots/${pickle.name}.png`, type: "png"})
+        const img = await fixture.page.screenshot({path: `./screenshots/${pickle.name}.png`, type: "png"})
         this.attach(img, "image/png");
     }
-    await pageFixture.page.close();
+    await fixture.page.close();
     await context.close();
 });
 
 AfterAll(async function () {
     await browser.close();
-    pageFixture.logger.close();
+    fixture.logger.close();
 });
