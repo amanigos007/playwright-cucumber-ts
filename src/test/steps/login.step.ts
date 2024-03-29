@@ -5,11 +5,11 @@ import {pageFixture} from "../../hooks/page.fixture";
 setDefaultTimeout(60 * 1000 * 2);
 
 Given('user navigates to application', async function () {
-    await pageFixture.page.goto("https://www.saucedemo.com/v1/");
+    await pageFixture.page.goto(`${process.env.BASEURL}index.html`);
 });
 
 Given('user click on the login link', async function () {
-    await pageFixture.page.goto("https://www.saucedemo.com/v1/");
+    await pageFixture.page.goto(`${process.env.BASEURL}index.html`);
 });
 
 

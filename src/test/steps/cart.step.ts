@@ -9,7 +9,7 @@ When('user add {string} to the cart', async function (product) {
 });
 
 When('user navigates to cart page', async function () {
-    await pageFixture.page.goto("https://www.saucedemo.com/v1/cart.html");
+    await pageFixture.page.goto(`${process.env.BASEURL}cart.html`);
 });
 
 Then('user should see {string} to the cart page', async function (product) {
